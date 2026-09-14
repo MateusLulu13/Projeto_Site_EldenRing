@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <br><br>
 
-        <!-- botão Pronto -->
+        <!-- botão pronto -->
         <button type="submit">Pronto</button>
 
     </form>
