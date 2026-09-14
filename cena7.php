@@ -6,7 +6,7 @@ require_once 'classes/Arma.php';
 require_once 'classes/Jogador.php';
 
 
-// PROTEÇÃO
+// protecao
 
 if (!isset($_SESSION['etapa']) || $_SESSION['etapa'] != 'cena7') {
     header("Location: index.php");
@@ -19,7 +19,7 @@ if (!isset($_SESSION['arma'])) {
 }
 
 
-// INICIAR BATALHA
+// iniciar batalha
 
 if (isset($_POST['iniciar_batalha'])) {
 
@@ -35,16 +35,16 @@ if (isset($_POST['iniciar_batalha'])) {
     $_SESSION['maliketh_vida'] = 1900;
     $_SESSION['maliketh_vida_maxima'] = 1900;
 
-    // Salto Sombrio
+    // salto sombrio
     $_SESSION['salto_sombrio'] = false;
 
-    // Turnos do Corte do HP Máximo
+    // turnos do corte do hp maximo
     $_SESSION['corte_hp_turnos'] = 0;
 
-    // Turnos da Degradação
+    // turnos da degradacao
     $_SESSION['degradacao_turnos'] = 0;
 
-    // Controle da batalha
+    // controle da batalha
     $_SESSION['batalha_maliketh'] = true;
 
     $_SESSION['mensagem_batalha'] =
@@ -54,12 +54,12 @@ if (isset($_POST['iniciar_batalha'])) {
     exit;
 }
 
-// VERIFICA SE A BATALHA COMEÇOU
+// verifica se a batalha comecou
 
 $batalha_iniciada = isset($_SESSION['batalha_maliketh']);
 
 
-// PROCESSAMENTO DA BATALHA
+// processamento da batalha
 
 if (
     $batalha_iniciada &&
@@ -72,7 +72,7 @@ if (
     $jogador = new Jogador();
 
 
-// RECUPERA DADOS DO JOGADOR
+// recupera dados do jogador
 
     $jogador->vida =
         $_SESSION['jogador']['vida'];
@@ -95,7 +95,7 @@ if (
     $mensagem = "";
 
 
-// DEGRADAÇÃO
+// degradacao
 
     if ($_SESSION['degradacao_turnos'] > 0) {
 
@@ -112,12 +112,12 @@ if (
             . " de dano. ";
     }
 
-// ATAQUE DO JOGADOR
+// ataque do jogador
 
     $arma = $_SESSION['arma'];
 
 
-// SALTO SOMBRIO
+// salto sombrio
 
     if (
         $_SESSION['salto_sombrio'] == true &&
@@ -154,7 +154,7 @@ if (
     }
 
 
-// ATAQUE NORMAL DO JOGADOR
+// ataque normal do jogador
 
     elseif ($acao == 'ataque_normal') {
 
@@ -173,7 +173,7 @@ if (
     }
 
 
-// ATAQUE ESPECIAL DO JOGADOR
+// ataque especial do jogador
     elseif ($acao == 'ataque_especial') {
 
         $dano = $arma['ataque_especial'];
@@ -206,7 +206,7 @@ if (
     }
 
 
-// CURAR
+// curar
 
     elseif ($acao == 'curar') {
 
@@ -231,7 +231,7 @@ if (
     }
 
 
-// RECUPERAR MANA
+// recuperar mana
 
     elseif ($acao == 'recuperar_mana') {
 
@@ -252,7 +252,7 @@ if (
     }
 
 
-// VERIFICA SE MALIKETH MORREU
+// verifica se maliketh morreu
 
     if ($_SESSION['maliketh_vida'] <= 0) {
 
@@ -265,13 +265,13 @@ if (
     }
 
 
-// ATAQUE DE MALIKETH
+// ataque de maliketh
 
     if ($_SESSION['salto_sombrio'] == true) {
 
 
 
-// FINAL DO SALTO SOMBRIO
+// final do salto sombrio
 
         $jogador->receber_dano(300);
 
@@ -283,16 +283,16 @@ if (
 
     } else {
 
-        // Primeiro verifica se Maliketh decidiu atacar.
+        // primeiro verifica se maliketh decidiu atacar
         $chance_atacar = rand(1, 100);
 
         if ($chance_atacar <= 70) {
 
-            // Maliketh decidiu atacar.
+            // maliketh decidiu atacar
             $tipo_ataque = rand(1, 100);
 
 
-// ATAQUE NORMAL — 60%
+// ataque normal 60
 
             if ($tipo_ataque <= 60) {
 
@@ -303,7 +303,7 @@ if (
             }
 
 
-// SALTO SOMBRIO — 20%
+// salto sombrio 20
 
             elseif ($tipo_ataque <= 80) {
 
@@ -316,7 +316,7 @@ if (
             }
 
 
-// LÂMINA DESTINADA — 20%
+// lamina destinada 20
 
             else {
 
@@ -327,7 +327,7 @@ if (
                     . "O corte causou 200 de dano.";
 
 
-// CORTE DO HP MÁXIMO
+// corte do hp maximo
 
                 if ($_SESSION['corte_hp_turnos'] <= 0) {
 
@@ -351,7 +351,7 @@ if (
                 }
 
 
-// ativa a degradação
+// ativa a degradacao
 
                 $_SESSION['degradacao_turnos'] = 3;
 
@@ -371,7 +371,7 @@ if (
 
 
 
-// REDUZ DURAÇÃO DO CORTE DO HP MÁXIMO
+// reduz duracao do corte do hp maximo
 
     if ($_SESSION['corte_hp_turnos'] > 0) {
 
@@ -379,7 +379,7 @@ if (
     }
 
 
-// SALVA OS DADOS DO JOGADOR
+// salva os dados do jogador
 
     $_SESSION['jogador']['vida'] =
         $jogador->vida;
@@ -403,7 +403,7 @@ if (
         $mensagem;
 
 
-// DERROTA
+// derrota
 
     if ($jogador->vida <= 0) {
 
@@ -415,7 +415,7 @@ if (
         exit;
     }
 
-// PRÓXIMO TURNO
+// proximo turno
 
 
     header("Location: cena7.php");
@@ -423,7 +423,7 @@ if (
 }
 
 
-// DADOS PARA EXIBIÇÃO
+// dados para exibicao
 
 if ($batalha_iniciada) {
 
@@ -483,7 +483,7 @@ if ($batalha_iniciada) {
 
 <?php if (!$batalha_iniciada): ?>
 
-    <!-- INTRODUÇÃO -->
+    <!-- introducao -->
 
     <img
         src="imagens/maliketh.png"
@@ -517,7 +517,7 @@ if ($batalha_iniciada) {
 
 <?php else: ?>
 
-    <!-- BATALHA -->
+    <!-- batalha -->
     <img
         src="imagens/maliketh.png"
         width="100%"
@@ -527,7 +527,7 @@ if ($batalha_iniciada) {
     <h1>Maliketh, the Black Blade</h1>
 
 
-    <!-- VIDA DE MALIKETH -->
+    <!-- vida de maliketh -->
 
     <h2>Vida de Maliketh</h2>
 
@@ -548,7 +548,7 @@ if ($batalha_iniciada) {
     <hr>
 
 
-    <!-- JOGADOR -->
+    <!-- jogador -->
 
     <h2>Maculado</h2>
 
@@ -585,7 +585,7 @@ if ($batalha_iniciada) {
     </progress>
 
 
-    <!-- EFEITOS -->
+    <!-- efeitos -->
 
     <?php if ($salto_ativo): ?>
 
@@ -631,7 +631,7 @@ if ($batalha_iniciada) {
     </h2>
 
 
-    <!-- AÇÕES -->
+    <!-- acoes -->
 
     <h2>Escolha sua ação</h2>
 
@@ -639,7 +639,7 @@ if ($batalha_iniciada) {
     <form method="post">
 
 
-        <!-- ATAQUE NORMAL -->
+        <!-- ataque normal -->
 
         <button
             type="submit"
@@ -660,7 +660,7 @@ if ($batalha_iniciada) {
         </button>
 
 
-        <!-- ATAQUE ESPECIAL -->
+        <!-- ataque especial -->
 
         <button
             type="submit"
@@ -681,7 +681,7 @@ if ($batalha_iniciada) {
         </button>
 
 
-        <!-- CURA -->
+        <!-- cura -->
 
         <button
             type="submit"
@@ -707,7 +707,7 @@ if ($batalha_iniciada) {
         </button>
 
 
-        <!-- RECUPERAR MANA -->
+        <!-- recuperar mana -->
 
         <button
             type="submit"

@@ -5,7 +5,7 @@ session_start();
 require_once 'classes/Arma.php';
 require_once 'classes/Jogador.php';
 
-// proteção
+// protecao
 if (!isset($_SESSION['etapa']) || $_SESSION['etapa'] != 'cena5') {
     header("Location: index.php");
     exit;
@@ -51,7 +51,7 @@ if (isset($_POST['iniciar_batalha'])) {
 
 
 
-// verifica se a luta começou
+// verifica se a luta comecou
 $batalha_iniciada = isset($_SESSION['batalha_morgott']);
 
 // processamento da chuva de espadas
@@ -106,22 +106,22 @@ if (
     }
 
 
-    // mostra o resultado antes do próximo turno
+    // mostra o resultado antes do proximo turno
     header("Location: cena5.php");
     exit;
 }
 
 
 
-// processamento das ações normais
+// processamento das acoes normais
 if (
     $batalha_iniciada &&
     $_SERVER['REQUEST_METHOD'] == 'POST' &&
     isset($_POST['acao'])
 ) {
 
-    // segurança extra:
-    // se a chuva estiver ativa, não processa ação normal.
+    // seguranca extra
+    // se a chuva estiver ativa nao processa acao normal
     if (
         isset($_SESSION['chuva_de_espadas']) &&
         $_SESSION['chuva_de_espadas'] == true
@@ -133,7 +133,7 @@ if (
 
     $acao = $_POST['acao'];
 
-    // cria jogador e recupera os dados da sessão
+    // cria jogador e recupera os dados da sessao
     $jogador = new Jogador();
 
     $jogador->vida = $_SESSION['jogador']['vida'];
@@ -150,7 +150,7 @@ if (
 
 
 
-// ATAQUE NORMAL
+// ataque normal
     if ($acao == 'ataque_normal') {
 
         $arma = $_SESSION['arma'];
@@ -171,7 +171,7 @@ if (
 
 
 
-// ATAQUE ESPECIAL
+// ataque especial
     elseif ($acao == 'ataque_especial') {
 
         $arma = $_SESSION['arma'];
@@ -206,7 +206,7 @@ if (
 
 
 
-// CURAR
+// curar
     elseif ($acao == 'curar') {
 
         if ($jogador->usos_cura <= 0) {
@@ -244,7 +244,7 @@ if (
 
 
 
-// RECUPERAR MANA
+// recuperar mana
     elseif ($acao == 'recuperar_mana') {
 
         if ($jogador->usos_mana <= 0) {
@@ -264,7 +264,7 @@ if (
     }
 
 
-// VERIFICA SE MORGOTT MORREU
+// verifica se morgott morreu
 
     if ($_SESSION['morgott_vida'] <= 0) {
 
@@ -277,7 +277,7 @@ if (
     }
 
 
-// SALVA OS DADOS DO JOGADOR
+// salva os dados do jogador
 
     $_SESSION['jogador']['vida'] = $jogador->vida;
     $_SESSION['jogador']['vida_maxima'] = $jogador->vida_maxima;
@@ -295,7 +295,7 @@ if (
 
 
 
-// CHUVA DE ESPADAS EM 66%
+// chuva de espadas em 66
 
     if (
         $vida_morgott <= 1320 &&
@@ -320,7 +320,7 @@ if (
 
 
 
-// CHUVA DE ESPADAS EM 33%
+// chuva de espadas em 33
 
     if (
         $vida_morgott <= 660 &&
@@ -344,7 +344,7 @@ if (
     }
 
 
-// ATAQUE NORMAL DE MORGOTT
+// ataque normal de morgott
 
     $chance_ataque = rand(1, 100);
 
@@ -355,7 +355,7 @@ if (
         $mensagem .=
             " Morgott realizou um ataque.";
 
-        // 20% de chance de criar um Selo
+        // 20 de chance de criar um selo
         $chance_selo = rand(1, 100);
 
         if ($chance_selo <= 20) {
@@ -374,7 +374,7 @@ if (
 
 
 
-// SALVA NOVAMENTE O JOGADOR
+// salva novamente o jogador
 
     $_SESSION['jogador']['vida'] = $jogador->vida;
     $_SESSION['jogador']['mana'] = $jogador->mana;
@@ -385,7 +385,7 @@ if (
     $_SESSION['mensagem_batalha'] = $mensagem;
 
 
-// DERROTA
+// derrota
 
     if ($jogador->vida <= 0) {
 
@@ -399,7 +399,7 @@ if (
 
 
 
-// NOVO TURNO
+// novo turno
 
     header("Location: cena5.php");
     exit;
@@ -407,7 +407,7 @@ if (
 
 
 
-// DADOS PARA EXIBIÇÃO
+// dados para exibicao
 
 if ($batalha_iniciada) {
 
@@ -461,7 +461,7 @@ if ($batalha_iniciada) {
 <?php if (!$batalha_iniciada): ?>
 
     
-    <!-- INTRODUÇÃO -->
+    <!-- introducao -->
     <img src="imagens/morgott.jpg" width="100%">
 
     <h1>O Guardião do Trono</h1>
@@ -485,7 +485,7 @@ if ($batalha_iniciada) {
 <?php else: ?>
 
     
-    <!-- BATALHA -->
+    <!-- batalha -->
 
     <img src="imagens/morgott.jpg" width="100%">
 
@@ -493,7 +493,7 @@ if ($batalha_iniciada) {
 
 
     
-    <!-- VIDA DE MORGOTT -->
+    <!-- vida de morgott -->
 
     <h2>Vida de Morgott</h2>
 
@@ -514,7 +514,7 @@ if ($batalha_iniciada) {
 
 
     
-    <!-- VIDA DO JOGADOR -->
+    <!-- vida do jogador -->
 
     <h2>Maculado</h2>
 
@@ -556,7 +556,7 @@ if ($batalha_iniciada) {
 
 
     
-    <!-- MENSAGEM -->
+    <!-- mensagem -->
 
     <h2>
         <?php echo $mensagem_batalha; ?>
@@ -564,7 +564,7 @@ if ($batalha_iniciada) {
 
 
     
-    <!-- CHUVA DE ESPADAS -->
+    <!-- chuva de espadas -->
 
     <?php if ($_SESSION['chuva_de_espadas'] == true): ?>
 
@@ -614,7 +614,7 @@ if ($batalha_iniciada) {
 
 
         
-        <!-- AÇÕES -->
+        <!-- acoes -->
 
         <h2>Escolha sua ação</h2>
 
