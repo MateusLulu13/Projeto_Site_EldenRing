@@ -627,7 +627,7 @@ if ($batalha_iniciada) {
                 value="ataque_normal">
 
                 <img
-                    src="imagens/ataque_normal.jpg"
+                    src="imagens/normal.webp"
                     width="100"
                     height="100"
                 >
@@ -645,7 +645,7 @@ if ($batalha_iniciada) {
                 value="ataque_especial">
 
                 <img
-                    src="imagens/ataque_especial.jpg"
+                    src="imagens/ataque_especial.webp"
                     width="100"
                     height="100"
                 >

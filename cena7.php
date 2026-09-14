@@ -1,0 +1,744 @@
+<?php
+
+session_start();
+
+require_once 'classes/Arma.php';
+require_once 'classes/Jogador.php';
+
+
+// PROTEÇÃO
+
+if (!isset($_SESSION['etapa']) || $_SESSION['etapa'] != 'cena7') {
+    header("Location: index.php");
+    exit;
+}
+
+if (!isset($_SESSION['arma'])) {
+    header("Location: index.php");
+    exit;
+}
+
+
+// INICIAR BATALHA
+
+if (isset($_POST['iniciar_batalha'])) {
+
+    $_SESSION['jogador'] = [
+        'vida' => 1000,
+        'vida_maxima' => 1000,
+        'mana' => 100,
+        'mana_maxima' => 100,
+        'usos_cura' => 4,
+        'usos_mana' => 2
+    ];
+
+    $_SESSION['maliketh_vida'] = 1900;
+    $_SESSION['maliketh_vida_maxima'] = 1900;
+
+    // Salto Sombrio
+    $_SESSION['salto_sombrio'] = false;
+
+    // Turnos do Corte do HP Máximo
+    $_SESSION['corte_hp_turnos'] = 0;
+
+    // Turnos da Degradação
+    $_SESSION['degradacao_turnos'] = 0;
+
+    // Controle da batalha
+    $_SESSION['batalha_maliketh'] = true;
+
+    $_SESSION['mensagem_batalha'] =
+        "A batalha contra Maliketh começou!";
+
+    header("Location: cena7.php");
+    exit;
+}
+
+// VERIFICA SE A BATALHA COMEÇOU
+
+$batalha_iniciada = isset($_SESSION['batalha_maliketh']);
+
+
+// PROCESSAMENTO DA BATALHA
+
+if (
+    $batalha_iniciada &&
+    $_SERVER['REQUEST_METHOD'] == 'POST' &&
+    isset($_POST['acao'])
+) {
+
+    $acao = $_POST['acao'];
+
+    $jogador = new Jogador();
+
+
+// RECUPERA DADOS DO JOGADOR
+
+    $jogador->vida =
+        $_SESSION['jogador']['vida'];
+
+    $jogador->vida_maxima =
+        $_SESSION['jogador']['vida_maxima'];
+
+    $jogador->mana =
+        $_SESSION['jogador']['mana'];
+
+    $jogador->mana_maxima =
+        $_SESSION['jogador']['mana_maxima'];
+
+    $jogador->usos_cura =
+        $_SESSION['jogador']['usos_cura'];
+
+    $jogador->usos_mana =
+        $_SESSION['jogador']['usos_mana'];
+
+    $mensagem = "";
+
+
+// DEGRADAÇÃO
+
+    if ($_SESSION['degradacao_turnos'] > 0) {
+
+        $dano_degradacao =
+            ceil($jogador->vida_maxima * 0.03);
+
+        $jogador->receber_dano($dano_degradacao);
+
+        $_SESSION['degradacao_turnos']--;
+
+        $mensagem .=
+            "A Degradação causou "
+            . $dano_degradacao
+            . " de dano. ";
+    }
+
+// ATAQUE DO JOGADOR
+
+    $arma = $_SESSION['arma'];
+
+
+// SALTO SOMBRIO
+
+    if (
+        $_SESSION['salto_sombrio'] == true &&
+        $acao == 'ataque_normal'
+    ) {
+
+        $mensagem .=
+            "Maliketh está no ar! "
+            . "Seu ataque não causou dano.";
+
+    }
+
+    elseif (
+        $_SESSION['salto_sombrio'] == true &&
+        $acao == 'ataque_especial'
+    ) {
+
+
+        $custo = $arma['custo_mana'];
+
+        if ($jogador->mana < $custo) {
+
+            $mensagem .=
+                "Mana insuficiente para usar o ataque especial.";
+
+        } else {
+
+            $jogador->gastar_mana($custo);
+
+            $mensagem .=
+                "Maliketh está no ar! "
+                . "Seu ataque especial não causou dano.";
+        }
+    }
+
+
+// ATAQUE NORMAL DO JOGADOR
+
+    elseif ($acao == 'ataque_normal') {
+
+        $dano = $arma['dano_basico'];
+
+        $_SESSION['maliketh_vida'] -= $dano;
+
+        if ($_SESSION['maliketh_vida'] < 0) {
+            $_SESSION['maliketh_vida'] = 0;
+        }
+
+        $mensagem .=
+            "Você realizou um ataque normal e causou "
+            . $dano
+            . " de dano em Maliketh.";
+    }
+
+
+// ATAQUE ESPECIAL DO JOGADOR
+    elseif ($acao == 'ataque_especial') {
+
+        $dano = $arma['ataque_especial'];
+
+        $custo = $arma['custo_mana'];
+
+
+        if ($jogador->mana < $custo) {
+
+            $mensagem .=
+                "Mana insuficiente para usar o ataque especial.";
+
+        } else {
+
+            $jogador->gastar_mana($custo);
+
+            $_SESSION['maliketh_vida'] -= $dano;
+
+            if ($_SESSION['maliketh_vida'] < 0) {
+                $_SESSION['maliketh_vida'] = 0;
+            }
+
+            $mensagem .=
+                "Você usou o ataque especial da "
+                . $arma['nome']
+                . " e causou "
+                . $dano
+                . " de dano em Maliketh.";
+        }
+    }
+
+
+// CURAR
+
+    elseif ($acao == 'curar') {
+
+        if ($jogador->usos_cura <= 0) {
+
+            $mensagem .=
+                "Você não possui mais usos de cura.";
+
+        } else {
+
+            $cura = 250;
+
+            $jogador->curar($cura);
+
+            $jogador->usos_cura--;
+
+            $mensagem .=
+                "Você recuperou "
+                . $cura
+                . " de vida.";
+        }
+    }
+
+
+// RECUPERAR MANA
+
+    elseif ($acao == 'recuperar_mana') {
+
+        if ($jogador->usos_mana <= 0) {
+
+            $mensagem .=
+                "Você não possui mais usos para recuperar mana.";
+
+        } else {
+
+            $jogador->recuperar_mana(40);
+
+            $jogador->usos_mana--;
+
+            $mensagem .=
+                "Você recuperou 40 de mana.";
+        }
+    }
+
+
+// VERIFICA SE MALIKETH MORREU
+
+    if ($_SESSION['maliketh_vida'] <= 0) {
+
+        $_SESSION['etapa'] = 'cena9';
+
+        unset($_SESSION['batalha_maliketh']);
+
+        header("Location: cena9.php");
+        exit;
+    }
+
+
+// ATAQUE DE MALIKETH
+
+    if ($_SESSION['salto_sombrio'] == true) {
+
+
+
+// FINAL DO SALTO SOMBRIO
+
+        $jogador->receber_dano(300);
+
+        $mensagem .=
+            " Maliketh desceu do Salto Sombrio "
+            . "e causou 300 de dano!";
+
+        $_SESSION['salto_sombrio'] = false;
+
+    } else {
+
+        // Primeiro verifica se Maliketh decidiu atacar.
+        $chance_atacar = rand(1, 100);
+
+        if ($chance_atacar <= 70) {
+
+            // Maliketh decidiu atacar.
+            $tipo_ataque = rand(1, 100);
+
+
+// ATAQUE NORMAL — 60%
+
+            if ($tipo_ataque <= 60) {
+
+                $jogador->receber_dano(180);
+
+                $mensagem .=
+                    " Maliketh realizou um ataque.";
+            }
+
+
+// SALTO SOMBRIO — 20%
+
+            elseif ($tipo_ataque <= 80) {
+
+                $_SESSION['salto_sombrio'] = true;
+
+                $mensagem .=
+                    " Maliketh realizou o Salto Sombrio! "
+                    . "Ele ficou inalcançável e descerá "
+                    . "no próximo turno.";
+            }
+
+
+// LÂMINA DESTINADA — 20%
+
+            else {
+
+                $jogador->receber_dano(200);
+
+                $mensagem .=
+                    " Maliketh realizou a Lâmina Destinada! "
+                    . "O corte causou 200 de dano.";
+
+
+// CORTE DO HP MÁXIMO
+
+                if ($_SESSION['corte_hp_turnos'] <= 0) {
+
+                    $novo_maximo =
+                        floor($jogador->vida_maxima * 0.93);
+
+                    $jogador->vida_maxima =
+                        $novo_maximo;
+
+                    if ($jogador->vida > $jogador->vida_maxima) {
+
+                        $jogador->vida =
+                            $jogador->vida_maxima;
+                    }
+
+                    $_SESSION['corte_hp_turnos'] = 3;
+
+                    $mensagem .=
+                        " Aplicou uma redução no HP Máximo  "
+                        . "de 7% por 3 turnos.";
+                }
+
+
+// ativa a degradação
+
+                $_SESSION['degradacao_turnos'] = 3;
+
+                $mensagem .=
+                    " Aplicou uma degradação "
+                    . "por 3 turnos.";
+            }
+
+        } else {
+
+            // maliketh errou o ataque
+
+            $mensagem .=
+                " Maliketh errou o ataque.";
+        }
+    }
+
+
+
+// REDUZ DURAÇÃO DO CORTE DO HP MÁXIMO
+
+    if ($_SESSION['corte_hp_turnos'] > 0) {
+
+        $_SESSION['corte_hp_turnos']--;
+    }
+
+
+// SALVA OS DADOS DO JOGADOR
+
+    $_SESSION['jogador']['vida'] =
+        $jogador->vida;
+
+    $_SESSION['jogador']['vida_maxima'] =
+        $jogador->vida_maxima;
+
+    $_SESSION['jogador']['mana'] =
+        $jogador->mana;
+
+    $_SESSION['jogador']['mana_maxima'] =
+        $jogador->mana_maxima;
+
+    $_SESSION['jogador']['usos_cura'] =
+        $jogador->usos_cura;
+
+    $_SESSION['jogador']['usos_mana'] =
+        $jogador->usos_mana;
+
+    $_SESSION['mensagem_batalha'] =
+        $mensagem;
+
+
+// DERROTA
+
+    if ($jogador->vida <= 0) {
+
+        $_SESSION['etapa'] = 'cena11';
+
+        unset($_SESSION['batalha_maliketh']);
+
+        header("Location: cena11.php");
+        exit;
+    }
+
+// PRÓXIMO TURNO
+
+
+    header("Location: cena7.php");
+    exit;
+}
+
+
+// DADOS PARA EXIBIÇÃO
+
+if ($batalha_iniciada) {
+
+    $vida_jogador =
+        $_SESSION['jogador']['vida'];
+
+    $vida_jogador_maxima =
+        $_SESSION['jogador']['vida_maxima'];
+
+    $mana_jogador =
+        $_SESSION['jogador']['mana'];
+
+    $mana_jogador_maxima =
+        $_SESSION['jogador']['mana_maxima'];
+
+    $usos_cura =
+        $_SESSION['jogador']['usos_cura'];
+
+    $usos_mana =
+        $_SESSION['jogador']['usos_mana'];
+
+    $vida_maliketh =
+        $_SESSION['maliketh_vida'];
+
+    $vida_maliketh_maxima =
+        $_SESSION['maliketh_vida_maxima'];
+
+    $mensagem_batalha =
+        $_SESSION['mensagem_batalha'];
+
+    $salto_ativo =
+        $_SESSION['salto_sombrio'];
+
+    $corte_turnos =
+        $_SESSION['corte_hp_turnos'];
+
+    $degradacao_ativa =
+        $_SESSION['degradacao_turnos'];
+}
+
+?>
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Cena 7 - Maliketh</title>
+
+</head>
+
+<body>
+
+
+<?php if (!$batalha_iniciada): ?>
+
+    <!-- INTRODUÇÃO -->
+
+    <img
+        src="imagens/maliketh.png"
+        width="100%"
+    >
+
+
+    <h1>O Guardião da Morte</h1>
+
+
+    <p>
+        Vitorioso contra Morgott, o Maculado é subitamente envolvido
+        por correntes de energia cinzenta e transportado contra sua
+        vontade para o céu tempestuoso de Farum Azula em ruínas.
+        Diante dele, entre escombros flutuantes, surge Maliketh,
+        the Black Blade.
+    </p>
+
+
+    <form method="post">
+
+        <button
+            type="submit"
+            name="iniciar_batalha"
+        >
+            Iniciar Batalha
+        </button>
+
+    </form>
+
+
+<?php else: ?>
+
+    <!-- BATALHA -->
+    <img
+        src="imagens/maliketh.png"
+        width="100%"
+    >
+
+
+    <h1>Maliketh, the Black Blade</h1>
+
+
+    <!-- VIDA DE MALIKETH -->
+
+    <h2>Vida de Maliketh</h2>
+
+    <progress
+        value="<?php echo $vida_maliketh; ?>"
+        max="<?php echo $vida_maliketh_maxima; ?>"
+    >
+    </progress>
+
+    <p>
+        <?php echo $vida_maliketh; ?>
+        /
+        <?php echo $vida_maliketh_maxima; ?>
+        HP
+    </p>
+
+
+    <hr>
+
+
+    <!-- JOGADOR -->
+
+    <h2>Maculado</h2>
+
+
+    <p>
+        Vida:
+        <?php echo $vida_jogador; ?>
+        /
+        <?php echo $vida_jogador_maxima; ?>
+        HP
+    </p>
+
+
+    <progress
+        value="<?php echo $vida_jogador; ?>"
+        max="<?php echo $vida_jogador_maxima; ?>"
+    >
+    </progress>
+
+
+    <p>
+        Mana:
+        <?php echo $mana_jogador; ?>
+        /
+        <?php echo $mana_jogador_maxima; ?>
+        MP
+    </p>
+
+
+    <progress
+        value="<?php echo $mana_jogador; ?>"
+        max="<?php echo $mana_jogador_maxima; ?>"
+    >
+    </progress>
+
+
+    <!-- EFEITOS -->
+
+    <?php if ($salto_ativo): ?>
+
+        <h3>
+            Maliketh está realizando o Salto Sombrio!
+        </h3>
+
+        <p>
+            Seus ataques não causarão dano neste turno.
+            Você ainda pode curar ou recuperar mana.
+        </p>
+
+    <?php endif; ?>
+
+
+    <?php if ($corte_turnos > 0): ?>
+
+        <p>
+            Corte do HP Máximo:
+            <?php echo $corte_turnos; ?>
+            turnos restantes.
+        </p>
+
+    <?php endif; ?>
+
+
+    <?php if ($degradacao_ativa > 0): ?>
+
+        <p>
+            Degradação:
+            <?php echo $degradacao_ativa; ?>
+            turnos restantes.
+        </p>
+
+    <?php endif; ?>
+
+
+    <hr>
+
+
+    <h2>
+        <?php echo $mensagem_batalha; ?>
+    </h2>
+
+
+    <!-- AÇÕES -->
+
+    <h2>Escolha sua ação</h2>
+
+
+    <form method="post">
+
+
+        <!-- ATAQUE NORMAL -->
+
+        <button
+            type="submit"
+            name="acao"
+            value="ataque_normal"
+        >
+
+            <img
+                src="imagens/normal.webp"
+                width="100"
+                height="100"
+            >
+
+            <br>
+
+            Ataque Normal
+
+        </button>
+
+
+        <!-- ATAQUE ESPECIAL -->
+
+        <button
+            type="submit"
+            name="acao"
+            value="ataque_especial"
+        >
+
+            <img
+                src="imagens/ataque_especial.webp"
+                width="100"
+                height="100"
+            >
+
+            <br>
+
+            Ataque Especial
+
+        </button>
+
+
+        <!-- CURA -->
+
+        <button
+            type="submit"
+            name="acao"
+            value="curar"
+        >
+
+            <img
+                src="imagens/cura.webp"
+                width="100"
+                height="100"
+            >
+
+            <br>
+
+            Curar
+
+            <br>
+
+            Usos:
+            <?php echo $usos_cura; ?>
+
+        </button>
+
+
+        <!-- RECUPERAR MANA -->
+
+        <button
+            type="submit"
+            name="acao"
+            value="recuperar_mana"
+        >
+
+            <img
+                src="imagens/recuperar_mana.webp"
+                width="100"
+                height="100"
+            >
+
+            <br>
+
+            Recuperar Mana
+
+            <br>
+
+            Usos:
+            <?php echo $usos_mana; ?>
+
+        </button>
+
+
+    </form>
+
+
+<?php endif; ?>
+
+
+</body>
+
+</html>
