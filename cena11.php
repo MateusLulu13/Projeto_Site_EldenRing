@@ -2,32 +2,32 @@
 
 session_start();
 
-// PROTEÇÃO
+// proteção
 if (!isset($_SESSION['etapa']) || $_SESSION['etapa'] != 'cena11') {
     header("Location: index.php");
     exit;
 }
 
 
-// VERIFICA DE QUAL CENA O JOGADOR VEIO
+// verifica de qual cena o jogador veio
 
 if (!isset($_SESSION['cena_morte'])) {
 
-    // Caso não exista uma cena salva,
-    // volta para o início.
+    // caso não exista uma cena salva
+    // volta para o início
 
     $_SESSION['cena_morte'] = 'index.php';
 }
 
-// VOLTAR PARA A ÚLTIMA GRAÇA
+// voltar para a última graça
 
 if (isset($_POST['voltar'])) {
 
     $cena_voltar =
         $_SESSION['cena_morte'];
 
-    // Define novamente a etapa correta
-    // para a proteção da cena.
+    // define novamente a etapa correta
+    // para a proteção da cena
 
     if ($cena_voltar == 'cena7.php') {
         $_SESSION['etapa'] = 'cena7';
@@ -41,7 +41,7 @@ if (isset($_POST['voltar'])) {
         $_SESSION['etapa'] = 'cena12';
     }
 
-    // Volta para a cena em que o jogador morreu.
+    // volta para a cena em que o jogador morreu
 
     header("Location: " . $cena_voltar);
     exit;
@@ -69,13 +69,13 @@ if (isset($_POST['voltar'])) {
         width="100%"
     >
 
-    <!-- TEXTO -->
+    <!-- texto -->
     <h1>
         A visão do Maculado escurece enquanto suas forças se esvaem.
     </h1>
 
 
-    <!-- BOTÃO -->
+    <!-- botão -->
 
     <form method="post">
 
