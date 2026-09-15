@@ -104,6 +104,8 @@ if (isset($_POST['continuar'])) {
 
     <title>O Desfortúnio em Leyndell</title>
 
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>

@@ -13,6 +13,7 @@ $_SESSION['etapa'] = 'personagem';
 <head>
     <meta charset="UTF-8">
     <title>Site Elden Ring</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>

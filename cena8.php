@@ -718,6 +718,8 @@ if ($batalha_iniciada) {
 
     <title>Cena 8 - Malenia</title>
 
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>

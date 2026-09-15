@@ -31,6 +31,8 @@ if (isset($_POST['avancar'])) {
 
     <title>O Triunfo sobre a Imparável</title>
 
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>

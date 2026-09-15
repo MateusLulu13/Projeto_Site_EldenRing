@@ -1,5 +1,4 @@
-﻿/* CSS para index.php */
-body {
+﻿body {
     background: radial-gradient(circle, #1a1a1a 0%, #050505 100%);
     color: #f6e7c1;
     font-family: Arial, Helvetica, sans-serif;
@@ -33,7 +32,6 @@ button {
 button:hover {
     background: linear-gradient(135deg, #e4b85e, #fff2c7);
 }
-
 
 
 
@@ -92,7 +90,6 @@ button:hover {
 
 
 
-
 /* CSS para cena2.php */
 body {
     background: #100f0d;
@@ -139,7 +136,6 @@ button {
 button:hover {
     background: #b07027;
 }
-
 
 
 
@@ -195,7 +191,6 @@ button:hover {
 
 
 
-
 /* CSS para cena4.php */
 body {
     background: #141312;
@@ -239,7 +234,6 @@ button {
 button:hover {
     background: #cc8231;
 }
-
 
 
 
@@ -293,7 +287,6 @@ button:hover {
 
 
 
-
 /* CSS para cena6.php */
 body {
     background: #1c1614;
@@ -336,7 +329,6 @@ button {
 button:hover {
     background: #a56526;
 }
-
 
 
 
@@ -392,7 +384,6 @@ button:hover {
 
 
 
-
 /* CSS para cena8.php */
 body {
     background: #171515;
@@ -434,7 +425,6 @@ button {
 button:hover {
     background: #a6632f;
 }
-
 
 
 
@@ -489,7 +479,6 @@ button:hover {
 
 
 
-
 /* CSS para cena10.php */
 body {
     background: #141515;
@@ -536,7 +525,6 @@ button:hover {
 
 
 
-
 /* CSS para cena11.php */
 body {
     background: #15151b;
@@ -578,7 +566,6 @@ button {
 button:hover {
     background: #684687;
 }
-
 
 
 
@@ -631,7 +618,6 @@ button:hover {
 
 
 
-
 /* CSS para cena12.php */
 body {
     background: #1a1510;
@@ -678,7 +664,6 @@ button:hover {
 
 
 
-
 /* CSS para cena13.1.php */
 body {
     background: #13181c;
@@ -720,7 +705,6 @@ button {
 button:hover {
     background: #4782a4;
 }
-
 
 
 

@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Cena 1 - O Despertar nas Terras Intermédias</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>

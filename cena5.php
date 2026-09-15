@@ -452,6 +452,8 @@ if ($batalha_iniciada) {
     <meta charset="UTF-8">
 
     <title>Cena 5 - Morgott</title>
+    
+    <link rel="stylesheet" href="style.css">
 
 </head>
 

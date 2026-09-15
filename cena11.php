@@ -60,6 +60,8 @@ if (isset($_POST['voltar'])) {
 
     <title>Morte</title>
 
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>

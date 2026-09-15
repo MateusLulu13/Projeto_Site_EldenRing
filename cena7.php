@@ -477,6 +477,8 @@ if ($batalha_iniciada) {
 
     <title>Cena 7 - Maliketh</title>
 
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>

@@ -31,6 +31,8 @@ if (isset($_POST['avancar'])) {
 
     <title>A Armadura do Destino Sombrio</title>
 
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
