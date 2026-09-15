@@ -407,7 +407,8 @@ if (
 
     if ($jogador->vida <= 0) {
 
-        $_SESSION['etapa'] = 'cena11';
+    $_SESSION['cena_morte'] = 'cena7.php';  
+    $_SESSION['etapa'] = 'cena11';
 
         unset($_SESSION['batalha_maliketh']);
 

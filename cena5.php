@@ -451,7 +451,7 @@ if ($batalha_iniciada) {
 
     <meta charset="UTF-8">
 
-    <title>Cena 5 - O Guardião do Trono</title>
+    <title>Cena 5 - Morgott</title>
 
 </head>
 

@@ -187,7 +187,8 @@ if (
         $_SESSION['jogador']['vida'] =
             0;
 
-        $_SESSION['etapa'] =
+            $_SESSION['cena_morte'] = 'cena8.php';
+            $_SESSION['etapa'] =
             'cena11';
 
         unset($_SESSION['batalha_malenia']);
@@ -642,6 +643,7 @@ if (
 
     if ($jogador->vida <= 0) {
 
+        $_SESSION['cena_morte'] = 'cena8.php';
         $_SESSION['etapa'] =
             'cena11';
 
