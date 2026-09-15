@@ -10,27 +10,17 @@ if (!isset($_SESSION['etapa']) || $_SESSION['etapa'] != 'personagem') {
 // quando o jogador clicar em "pronto"
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // Verifica se escolheu um personagem
-    if (isset($_POST['tipo'])) {
-        $_SESSION['tipo_personagem'] = $_POST['tipo'];
-    } else {
-        $erro = "Escolha um personagem.";
-    }
+    // salva o personagem escolhido
+    $_SESSION['tipo_personagem'] = $_POST['tipo'];
 
-    // verifica se digitou um nome
-    if (isset($_POST['nome']) && trim($_POST['nome']) != '') {
-        $_SESSION['nome_jogador'] = trim($_POST['nome']);
-    } else {
-        $erro = "Digite um nome.";
-    }
+    // salva o nome
+    $_SESSION['nome_jogador'] = trim($_POST['nome']);
 
-    // se tudo estiver preenchido, vai para a Cena 1
-    if (!isset($erro)) {
-        $_SESSION['etapa'] = 'cena1';
+    // vai para a Cena 1
+    $_SESSION['etapa'] = 'cena1';
 
-        header("Location: cena1.php");
-        exit;
-    }
+    header("Location: cena1.php");
+    exit;
 }
 ?>
 
@@ -46,17 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <h1>Escolha seu personagem</h1>
 
-    <?php
-    if (isset($erro)) {
-        echo "<p>$erro</p>";
-    }
-    ?>
-
     <form method="post">
 
         <!-- tipo A -->
         <label>
-            <input type="radio" name="tipo" value="tipo_a">
+            <input type="radio" name="tipo" value="tipo_a" required>
 
             <br>
 
@@ -92,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             id="nome"
             name="nome"
             maxlength="50"
+            required
         >
 
         <br><br>

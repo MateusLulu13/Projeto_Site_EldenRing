@@ -12,7 +12,7 @@ $_SESSION['etapa'] = 'personagem';
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>RPG - Terras Intermédias</title>
+    <title>Site Elden Ring</title>
 </head>
 
 <body>
@@ -21,9 +21,9 @@ $_SESSION['etapa'] = 'personagem';
 
     <br><br>
 
-    <form action="personagem.php" method="post">
-        <button type="submit">Novo Jogo</button>
-    </form>
+    <a href="personagem.php"> 
+        <button type="button">Novo Jogo</button> 
+    </a>
 
 </body>
 </html>
