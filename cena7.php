@@ -217,7 +217,7 @@ if (
 
         } else {
 
-            $cura = 250;
+            $cura = 300;
 
             $jogador->curar($cura);
 
@@ -242,12 +242,12 @@ if (
 
         } else {
 
-            $jogador->recuperar_mana(40);
+            $jogador->recuperar_mana(50);
 
             $jogador->usos_mana--;
 
             $mensagem .=
-                "Você recuperou 40 de mana.";
+                "Você recuperou 50 de mana.";
         }
     }
 
