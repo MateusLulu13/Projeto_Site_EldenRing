@@ -31,8 +31,8 @@ if (isset($_POST['iniciar_batalha'])) {
         'usos_mana' => 2
     ];
 
-    $_SESSION['malenia_vida'] = 2400;
-    $_SESSION['malenia_vida_maxima'] = 2400;
+    $_SESSION['malenia_vida'] = 2200;
+    $_SESSION['malenia_vida_maxima'] = 2200;
 
     $_SESSION['malenia_fase2'] = false;
 
@@ -394,7 +394,7 @@ if (
 
         } else {
 
-            $jogador->recuperar_mana(50);
+            $jogador->recuperar_mana(60);
 
             $jogador->usos_mana--;
 

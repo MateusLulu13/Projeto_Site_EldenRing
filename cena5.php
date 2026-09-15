@@ -28,8 +28,8 @@ if (isset($_POST['iniciar_batalha'])) {
         'usos_mana' => 2
     ];
 
-    $_SESSION['morgott_vida'] = 2000;
-    $_SESSION['morgott_vida_maxima'] = 2000;
+    $_SESSION['morgott_vida'] = 2600;
+    $_SESSION['morgott_vida_maxima'] = 2600;
 
     $_SESSION['morgott_golpe_66'] = false;
     $_SESSION['morgott_golpe_33'] = false;
@@ -298,7 +298,7 @@ if (
 // chuva de espadas em 66
 
     if (
-        $vida_morgott <= 1320 &&
+        $vida_morgott <= 1716 &&
         $_SESSION['morgott_golpe_66'] == false
     ) {
 
@@ -323,7 +323,7 @@ if (
 // chuva de espadas em 33
 
     if (
-        $vida_morgott <= 660 &&
+        $vida_morgott <= 858 &&
         $_SESSION['morgott_golpe_33'] == false
     ) {
 

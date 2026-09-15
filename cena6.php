@@ -19,15 +19,15 @@ if (!isset($_SESSION['etapa']) || $_SESSION['etapa'] != 'cena6') {
 
 $esmagador = new Arma(
     "Esmagador de Gigantes",
-    200,
-    420,
-    45
+    180,
+    350,
+    40
 );
 
 $rios = new Arma(
     "Rios de Sangue",
-    130,
-    260,
+    125,
+    250,
     15
 );
 

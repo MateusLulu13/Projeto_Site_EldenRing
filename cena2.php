@@ -14,16 +14,16 @@ require_once 'classes/Arma.php';
 // criando as armas
 $presa_cao_de_caca = new Arma(
     "Presa do Cão de Caça",
-    140,
-    280,
+    130,
+    260,
     20
 );
 
 $zweihander = new Arma(
     "Zweihander",
-    160,
-    310,
-    30
+    150,
+    300,
+    25
 );
 
 

@@ -15,15 +15,15 @@ require_once 'classes/Arma.php';
 $veu_da_lua = new Arma(
     "Véu da Lua",
     120,
-    270,
+    240,
     15
 );
 
 $cajado_lusat = new Arma(
-    "Cajado Pedrilhante de Lusat",
-    110,
-    500,
-    45
+    "Espada Grande da Lua Sombria",
+    140,
+    310,
+    25
 );
 
 
@@ -117,14 +117,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="submit" name="escolha" value="lusat">
 
             <img
-                src="imagens/cajado_lusat.png"
+                src="imagens/Greatsword.webp"
                 width="200"
                 height="200"
             >
 
             <br>
 
-            B: Empunhar o Cajado Pedrilhante de Lusat.
+            B: Empunhar a Espada Grande da Lua Sombria.
 
         </button>
 

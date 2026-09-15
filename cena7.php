@@ -242,12 +242,12 @@ if (
 
         } else {
 
-            $jogador->recuperar_mana(50);
+            $jogador->recuperar_mana(60);
 
             $jogador->usos_mana--;
 
             $mensagem .=
-                "Você recuperou 50 de mana.";
+                "Você recuperou 60 de mana.";
         }
     }
 
