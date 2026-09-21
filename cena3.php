@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
     <!-- imagem da cena -->
-    <img src="imagens/cena3.png" width="100%">
+    <img src="imagens/cena3.1.png" width="100%">
 
     <h1>O Legado dos Magos</h1>
 

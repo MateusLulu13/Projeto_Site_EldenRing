@@ -343,7 +343,7 @@ if (
                             $jogador->vida_maxima;
                     }
 
-                    $_SESSION['corte_hp_turnos'] = 3;
+                    $_SESSION['corte_hp_turnos'] = 4;
 
                     $mensagem .=
                         " Aplicou uma redução no HP Máximo  "
