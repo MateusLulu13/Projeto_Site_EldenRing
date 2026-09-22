@@ -716,7 +716,7 @@ if ($batalha_iniciada) {
 
     <meta charset="UTF-8">
 
-    <title>Cena 8 - Malenia</title>
+    <title>Malenia, Blade of Miquella</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -793,7 +793,7 @@ if ($batalha_iniciada) {
 
     <?php if ($fase2): ?>
 
-        <h2>FASE 2 — PODRIDÃO ESCARLATE</h2>
+        <h2>FASE 2 — Malenia, Goddess of Rot</h2>
 
         <p>
             Contador da podridão:

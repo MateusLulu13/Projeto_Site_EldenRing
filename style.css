@@ -1698,3 +1698,266 @@ body img[src="imagens/maliketh.png"] {
     box-shadow: 0 0 0 2px rgba(255, 230, 195, 0.4), 0 0 22px rgba(237, 169, 73, 0.3);
     filter: brightness(0.78) contrast(1.12) saturate(1.12);
 }
+
+
+/* =========================================================
+   AJUSTES FINAIS DO RPG
+   - Barras de HP de Malenia e Ederson iguais às de
+     Morgott/Maliketh
+   - Botões de ação menores e padronizados
+   - Botões centralizados
+   - Caixa de nome de personagem abaixo das escolhas
+   ========================================================= */
+
+/* ---------- BOTÕES GERAIS ---------- */
+
+body button {
+    min-width: 0;
+    width: auto;
+    min-height: 0;
+    padding: 8px 14px;
+    margin: 6px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Formulários ficam centralizados por padrão */
+body form {
+    text-align: center;
+}
+
+/* Impede que imagens dentro dos botões herdem o tamanho
+   grande das imagens principais da página */
+body button img {
+    width: 70px !important;
+    height: 70px !important;
+    max-width: 70px !important;
+    max-height: 70px !important;
+    object-fit: cover;
+    display: inline-block;
+    margin: 0 auto;
+    border: 0;
+    box-shadow: none;
+    filter: none;
+    transform: none;
+}
+
+/* Não aplica o efeito de zoom das imagens da página aos
+   ícones dos botões */
+body button:hover img {
+    transform: none;
+    box-shadow: none;
+    filter: none;
+}
+
+/* ---------- FORMULÁRIOS DE AÇÃO DE BATALHA ---------- */
+
+body h2 + form button,
+body form button[name="acao"] {
+    width: 135px;
+    min-width: 135px;
+    min-height: 118px;
+    vertical-align: top;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 7px 8px;
+    margin: 5px;
+    font-size: 13px;
+}
+
+/* ---------- BARRAS DE VIDA/MANA ---------- */
+
+body progress {
+    width: min(280px, 28vw);
+    height: 14px;
+    margin: 8px auto;
+}
+
+/* Mantém a aparência da barra de Morgott/Maliketh
+   também em Malenia e Ederson */
+body img[src="imagens/malenia.png"] ~ h2:nth-of-type(1) + progress,
+body img[src="imagens/ederson.png"] ~ h2:nth-of-type(1) + progress {
+    position: absolute;
+    top: 84px;
+    right: 24px;
+    z-index: 99;
+    width: min(280px, 28vw);
+    height: 14px;
+    display: block;
+    margin: 0;
+    border: 1px solid #f8c66a;
+    border-radius: 8px;
+    background: #0f0c08;
+    box-shadow: 0 0 8px rgba(247, 185, 91, 0.4);
+}
+
+body img[src="imagens/malenia.png"] ~ h2:nth-of-type(1),
+body img[src="imagens/ederson.png"] ~ h2:nth-of-type(1) {
+    position: absolute;
+    top: 36px;
+    right: 24px;
+    z-index: 99;
+    color: #ffe2ae;
+    background: rgba(0,0,0,0.78);
+    border: 1px solid #d39832;
+    padding: 8px 12px;
+    margin: 0;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+body img[src="imagens/malenia.png"] ~ h2:nth-of-type(1) + progress + p,
+body img[src="imagens/ederson.png"] ~ h2:nth-of-type(1) + progress + p {
+    position: absolute;
+    top: 114px;
+    right: 24px;
+    z-index: 99;
+    width: min(280px, 28vw);
+    box-sizing: border-box;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    padding: 8px 10px;
+    background: rgba(0,0,0,0.76);
+    color: #fbdca9;
+    border-left: 3px solid #e19b34;
+    border-radius: 8px;
+}
+
+/* ---------- IMAGENS DOS BOSSES ---------- */
+
+body img[src="imagens/malenia.png"],
+body img[src="imagens/ederson.png"] {
+    width: 100%;
+    max-height: 430px;
+    display: block;
+    border: 2px solid #d1942e;
+    border-radius: 10px;
+    box-shadow:
+        0 0 0 2px rgba(255, 230, 195, 0.4),
+        0 0 22px rgba(237, 169, 73, 0.3);
+    filter: brightness(0.78) contrast(1.12) saturate(1.12);
+}
+
+/* ---------- NOVO JOGO ---------- */
+
+body > a {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    text-align: center;
+}
+
+body > a button {
+    display: inline-block;
+    min-width: 150px;
+}
+
+/* ---------- PERSONAGEM.PHP ---------- */
+
+/* O formulário da escolha do personagem fica organizado
+   verticalmente e centralizado */
+body:has(img[src="imagens/rapaiz.jpg"]) form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+/* Cada escolha ocupa sua própria linha */
+body:has(img[src="imagens/rapaiz.jpg"]) form label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5px auto;
+}
+
+/* Mantém as imagens dos personagens com tamanho consistente */
+body:has(img[src="imagens/rapaiz.jpg"]) form label img {
+    width: 200px !important;
+    height: 200px !important;
+    max-width: 200px !important;
+    max-height: 200px !important;
+}
+
+/* Caixa de nome fica abaixo dos botões/imagens */
+body:has(img[src="imagens/rapaiz.jpg"]) form label[for="nome"] {
+    display: block;
+    margin-top: 14px;
+}
+
+body:has(img[src="imagens/rapaiz.jpg"]) form #nome {
+    display: block;
+    width: min(300px, 80vw);
+    margin: 6px auto 10px;
+    padding: 9px 11px;
+    box-sizing: border-box;
+    background: rgba(0,0,0,0.65);
+    color: #ffe8bb;
+    border: 1px solid #d3a95e;
+    border-radius: 7px;
+}
+
+/* Botão Pronto fica abaixo da caixa de nome */
+body:has(img[src="imagens/rapaiz.jpg"]) form button[type="submit"] {
+    display: block;
+    margin: 10px auto;
+}
+
+/* ---------- ESCOLHA DE ARMAS ---------- */
+
+body form button[name="escolha"] {
+    width: 210px;
+    min-width: 210px;
+    min-height: 0;
+    padding: 8px;
+}
+
+body form button[name="escolha"] img {
+    width: 150px !important;
+    height: 150px !important;
+    max-width: 150px !important;
+    max-height: 150px !important;
+}
+
+/* ---------- RESPONSIVO ---------- */
+
+@media (max-width: 700px) {
+    body {
+        padding: 15px;
+    }
+
+    body h2 + form button,
+    body form button[name="acao"] {
+        width: 125px;
+        min-width: 125px;
+        min-height: 112px;
+        font-size: 12px;
+    }
+
+    body button img {
+        width: 62px !important;
+        height: 62px !important;
+        max-width: 62px !important;
+        max-height: 62px !important;
+    }
+
+    body img[src="imagens/malenia.png"] ~ h2:nth-of-type(1),
+    body img[src="imagens/ederson.png"] ~ h2:nth-of-type(1) {
+        right: 12px;
+        top: 25px;
+    }
+
+    body img[src="imagens/malenia.png"] ~ h2:nth-of-type(1) + progress,
+    body img[src="imagens/ederson.png"] ~ h2:nth-of-type(1) + progress,
+    body img[src="imagens/malenia.png"] ~ h2:nth-of-type(1) + progress + p,
+    body img[src="imagens/ederson.png"] ~ h2:nth-of-type(1) + progress + p {
+        right: 12px;
+        width: min(240px, 40vw);
+    }
+}

@@ -32,8 +32,8 @@ if (isset($_POST['iniciar_batalha'])) {
         'usos_mana' => 2
     ];
 
-    $_SESSION['ederson_vida'] = 2700;
-    $_SESSION['ederson_vida_maxima'] = 2700;
+    $_SESSION['ederson_vida'] = 2200;
+    $_SESSION['ederson_vida_maxima'] = 2200;
 
     // estados e modificadores
     $_SESSION['batalha_ederson'] = true;
@@ -149,9 +149,9 @@ if ($batalha_iniciada && $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['a
     if ($_SESSION['ederson_vida'] <= 0) {
         if (!$_SESSION['fase2_bsod']) {
             $_SESSION['fase2_bsod'] = true;
-            $_SESSION['ederson_vida'] = 1000;
-            $_SESSION['ederson_vida_maxima'] = 1000;
-            $_SESSION['countdown_bsod'] = 5;
+            $_SESSION['ederson_vida'] = 503;
+            $_SESSION['ederson_vida_maxima'] = 503;
+            $_SESSION['countdown_bsod'] = 6;
             $mensagem .= " ERRO CRÍTICO! PROCESSO ENCERRADO... REINICIANDO PROCESSO... EDESON.EXE REINICIADO COM TELA AZUL DA MORTE!";
         } else {
             // vitoria
@@ -214,10 +214,10 @@ if ($batalha_iniciada && $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['a
         // ataques de ederson
         if ($_SESSION['ederson_overflow']) {
             // Ataque especial de Overflow
-            $jogador->receber_dano(500);
+            $jogador->receber_dano(400);
             $_SESSION['ederson_vulneravel'] = true; // Fica vulnerável no próximo turno
             $_SESSION['ederson_overflow'] = false;
-            $mensagem .= " OVERFLOW! Ederson causou 500 de dano crítico, mas ficou extremamente vulnerável!";
+            $mensagem .= " OVERFLOW! Ederson causou 400 de dano crítico, mas ficou extremamente vulnerável!";
         } else {
             // chance de ataque (60% de chance)
             $chance_atacar = rand(1, 100);
