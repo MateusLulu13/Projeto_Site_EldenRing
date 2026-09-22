@@ -1,11 +1,33 @@
 <?php
 session_start();
 
+require_once 'config.php';
+require_once 'db.php';
+
 // proteçao
 if (!isset($_SESSION['etapa']) || $_SESSION['etapa'] != 'cena13.1') {
     header("Location: index.php");
     exit;
 }
+
+// nome do jogador, para registrar no ranking
+$nome_jogador =
+    isset($_SESSION['nome_jogador']) ? $_SESSION['nome_jogador'] : 'Anônimo';
+
+// garante que exista uma pontuação
+if (!isset($_SESSION['pontos'])) {
+    $_SESSION['pontos'] = PONTOS_INICIAIS;
+}
+
+// concede o bônus apenas uma vez nesta partida
+if (!isset($_SESSION['bonus_cena13_1'])) {
+    $_SESSION['pontos'] += PONTOS_BONUS_FINAL;
+    $_SESSION['bonus_cena13_1'] = true;
+}
+
+// salva/atualiza a pontuação do jogador no ranking
+    salvar_pontuacao($nome_jogador, $_SESSION['pontos']);
+
 ?>
 
 <!DOCTYPE html>

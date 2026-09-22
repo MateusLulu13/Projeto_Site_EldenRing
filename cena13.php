@@ -1,10 +1,25 @@
 <?php
 session_start();
 
+require_once 'config.php';
+require_once 'db.php';
+
 // proteçao
 if (!isset($_SESSION['etapa']) || $_SESSION['etapa'] != 'cena13') {
     header("Location: index.php");
     exit;
+}
+
+// nome do jogador, para registrar no ranking
+$nome_jogador =
+    isset($_SESSION['nome_jogador']) ? $_SESSION['nome_jogador'] : 'Anônimo';
+
+// garante que exista uma pontuação, mesmo que o jogador
+if (!isset($_SESSION['pontos'])) {
+    $_SESSION['pontos'] = PONTOS_INICIAIS;
+}
+{// salva/atualiza a pontuação do jogador no ranking
+    salvar_pontuacao($nome_jogador, $_SESSION['pontos']);
 }
 ?>
 

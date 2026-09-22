@@ -26,6 +26,8 @@ $_SESSION['etapa'] = 'personagem';
         <button type="button">Novo Jogo</button> 
     </a>
 
+    <br><br>
+
     <a href="ranking.php">
         <button type="button">Ver Ranking</button>
     </a>
